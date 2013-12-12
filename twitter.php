@@ -10,7 +10,6 @@
  */
 function tweets()
 	{
-		
 		class TwitterAPIExchange
 		{
 			private $oauth_access_token;
@@ -293,12 +292,12 @@ function tweets()
 				   $status['text']=str_replace($url['url'], '<a href="' . $url['url'] . '">' . $url['url'] . '</a>',$status['text']);
 				}
 				
-                do_action("revenginet_add", $status['text'], $status['created_at'], 0);
+                do_action("revenginet_add_post", $status['text'], 0, $status['created_at']);
                 
 			}
 		}
 	}
-	
+    
 	function time_elapsed_string($ptime) {
     $etime = time() - strtotime($ptime);
     
@@ -326,5 +325,3 @@ function tweets()
     add_action('revenginet_update', 'tweets');
 
 ?>
-
-
