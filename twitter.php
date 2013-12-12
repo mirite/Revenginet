@@ -1,5 +1,14 @@
 <?
-function twitter($tweetCount)
+/**
+ * Plugin Name: Twitter For Revenginet
+ * Plugin URI: http://revengi.net
+ * Description: Adds Twitter posts to Revenginet
+ * Version: 0.1
+ * Author: Jesse Conner
+ * Author URI: http://m-i-rite.com
+ * License: GPL2
+ */
+function tweets()
 	{
 		
 		class TwitterAPIExchange
@@ -261,7 +270,7 @@ function twitter($tweetCount)
 		);	
 		
 		$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-		$getfield = "?screen_name=m_i_rite&count=$tweetCount";
+		$getfield = "?screen_name=m_i_rite&count=20";
 		$requestMethod = 'GET';
 		$twitter = new TwitterAPIExchange($settings);
 		$output= $twitter->setGetfield($getfield)
@@ -279,23 +288,18 @@ function twitter($tweetCount)
 		{
 			foreach($output as $status)
 			{
-				//print_r($status);
-				echo '<article class="tweet">';
-				
-				$user=$status['user']['screen_name'];
-				
 				echo '<a href="http://twitter.com/' . $user . '">' . $status['user']['name'] . '</a> ';
 				echo '<a href="http://twitter.com/' . $user . '/status/' . $status['id'] .'">' . time_elapsed_string($status['created_at']) . '</a>';
-				echo '<br class="clearBoth">';
+				
 				
 				foreach ($status['entities']['urls'] as $url) 
 				{
 				   $status['text']=str_replace($url['url'], '<a href="' . $url['url'] . '">' . $url['url'] . '</a>',$status['text']);
 				}
 				
-				echo '<p>' . $status['text'] . '</p>';
-				
-				echo '</article>';
+				$status['text']
+                do_action("revenginet_add", $status['text'], $status['created_at'], 0);
+                
 			}
 		}
 	}
@@ -324,5 +328,8 @@ function twitter($tweetCount)
 		}
 	}	
 	
-	
+    add_action('revenginet_update', 'tweets');
+
 ?>
+
+

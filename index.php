@@ -13,13 +13,13 @@
  global $wpdb;
  $pre = $wpdb->get_prefix();
  
-require('twitter.php');
 $revenginet=new revenginet();
 
 class revenginet {
 
     function __construct () {
-        register_activation_hook( __FILE__, 'makeTables' );
+        register_activation_hook( __FILE__, 'makeTables');
+        add_action('revenginet_add_post', 'add', 1, 3);
     }
     
     function makeTables() {
@@ -38,7 +38,9 @@ class revenginet {
     function generate() {
         global $pre;
         global $wpdb;
-    
+        
+        do_action("revenginet_update");
+        
         $t=$pre . "revenginet";
     
         $wpdb->get_results("SELECT * FROM $t");
