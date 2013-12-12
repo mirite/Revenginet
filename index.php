@@ -8,10 +8,6 @@
  * Author URI: http://m-i-rite.com
  * License: GPL2
  */
-
- global $pre;
- global $wpdb;
- $pre = $wpdb->get_prefix();
  
 $revenginet=new revenginet();
 

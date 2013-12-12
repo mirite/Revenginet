@@ -288,16 +288,11 @@ function tweets()
 		{
 			foreach($output as $status)
 			{
-				echo '<a href="http://twitter.com/' . $user . '">' . $status['user']['name'] . '</a> ';
-				echo '<a href="http://twitter.com/' . $user . '/status/' . $status['id'] .'">' . time_elapsed_string($status['created_at']) . '</a>';
-				
-				
 				foreach ($status['entities']['urls'] as $url) 
 				{
 				   $status['text']=str_replace($url['url'], '<a href="' . $url['url'] . '">' . $url['url'] . '</a>',$status['text']);
 				}
 				
-				$status['text']
                 do_action("revenginet_add", $status['text'], $status['created_at'], 0);
                 
 			}
